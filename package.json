@@ -1,25 +1,66 @@
 {
   "name": "react-weather-app",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@auth0/auth0-react": "^1.1.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@cypress/instrument-cra": "^1.3.2",
+    "@scu/core-ui": "^3.3.0",
+    "@stencil/core": "^1.0.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/auth0": "^2.20.8",
+    "@types/enzyme": "^3.10.6",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.62",
-    "@types/react": "^16.9.49",
-    "@types/react-dom": "^16.9.8",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3",
-    "typescript": "^3.7.5"
+    "@types/react": "^16.9.53",
+    "@types/react-bootstrap": "^0.32.24",
+    "@types/react-dom": "^16.0.0",
+    "@types/react-redux": "^5.0.6",
+    "@types/react-router-dom": "^4.2.2",
+    "@types/react-router-redux": "^5.0.10",
+    "auth0-js": "^9.14.0",
+    "axios": "^0.20.0",
+    "bootstrap": "^4.5.2",
+    "cross-env": "^7.0.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "husky": "^4.3.0",
+    "jest-enzyme": "^7.1.2",
+    "lint-staged": "^10.3.0",
+    "react": "^16.0.0",
+    "react-bootstrap": "^1.0.1",
+    "react-dom": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.8",
+    "react-scripts": "^4.0.0",
+    "react-scripts-ts": "^4.0.1",
+    "redux": "latest",
+    "redux-logger": "latest",
+    "redux-thunk": "latest",
+    "tslint-ext": "^1.1.0",
+    "typescript": "^3.8.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "release": "standard-version",
+    "format": "prettier --write src/**/*.ts{,x}",
+    "lint:ts": "eslint --ext=jsx,ts,tsx src",
+    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
+    "lint-warn": "eslint --ext .ts --ext .tsx . -c .eslintrc.warn.json",
+    "cy:chrome": "cypress run --browser chrome",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cypress:coverage": "npx nyc report --reporter=text-summary",
+    "cypress:lcov": "nyc report --reporter=lcov --reporter=text"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,5 +76,44 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@cypress/code-coverage": "^3.8.1",
+    "@types/auth0-js": "^9.14.0",
+    "@types/redux-logger": "^3.0.8",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
+    "add": "^2.0.6",
+    "babel-plugin-istanbul": "^6.0.0",
+    "commitizen": "^4.2.1",
+    "cypress": "^5.5.0",
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-typescript": "^10.0.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^24.0.2",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.2",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "nyc": "^15.1.0",
+    "prettier": "^2.1.2"
+  },
+  "setupFiles": [
+    "<rootDir>/src/setupTests.js"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "nyc": {
+    "exclude": "src/serviceWorker.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/szai0103/react-weather-app.git"
   }
 }

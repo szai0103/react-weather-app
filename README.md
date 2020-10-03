@@ -1,44 +1,78 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ReactWeatherApp
 
-## Available Scripts
+This is a test project created to demonstrate using React.js with Typescript, auth0-js from Auth0, Schwarz CoreUI and Cypress testing.
 
-In the project directory, you can run:
+## Installation
 
-### `npm start`
+```bash
+## install the node_modules
+npm install
+```
+## Set up NPM-Registry
+CoreUI is available either via the On-Premise Artifactory [REPO_SCHWARZ](https://repo.schwarz) or via the [Cloud Artifactory](https://schwarzit.jfrog.io).
+The Cloud Artifactory is synchronized daily.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The first step is to set the CoreUI NPM registry.
+You can find an step-by-step guide here: [Setting up the Artifactory](https://confluence.schwarz/display/LCU/Setting+up+the+Artifactory)
+As an example I will provide my `.npmrc` file where you need to put your own credentials.
+```bash
+//.npmrc
+@scu:registry=https://schwarzit.jfrog.io/artifactory/api/npm/npm/
+//schwarzit.jfrog.io/artifactory/api/npm/npm/:_password=YOUR_PASSWORD
+//schwarzit.jfrog.io/artifactory/api/npm/npm/:username=YOUR_EMAIL
+//schwarzit.jfrog.io/artifactory/api/npm/npm/:always-auth=true
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```
 
-### `npm test`
+## Create a Free Auth0 Account
+Go to Auth0 and sign in, then create a new application by clicking on `CREATE APPLICATION`. After this you should follow the first step of the `Quickstart` to `Configure Auth0`
+Then you are ready to create `auth_config.json` and paste there your own credentials.
+```tsx
+//  src/auth_variables.tsx
+export const AUTH_CONFIG = {
+  domain: 'YOUR_DOMAIN',
+  clientId: 'YOUR_CLIENT_ID',
+  callbackUrl: 'YOUR_CALLBACK_URL',
+  redirect_url: 'YOUR_REDIRECT_URL'
+};
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Create a Test User in Auth0 for testing purposes
+Go to Auth0 dashboard and click on `User Management`, then go to `Users`, then create a new user by clicking on `CREATE USER`. On the dialog shown by Auth0, fill the form as follows:
+1. **Email:** Enter a random email address (e.g., e2e-testing@mydomain.com)
+2. **Password:** Enter a random password (e.g., s#m3R4nd0m-pass)
+3. **Repeat Password:** Enter the same password.
+4. **Connection:** Use the Username-Password-Authentication
 
-### `npm run build`
+After that, click on Save to finish the process.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Lastly, you will have to go to your tenant's settings and set `Username-Password-Authentication` as the value of the Default Directory property. As mentioned in this page, this field defines the "name of the connection to be used for Password Grant exchanges". In this case, the `Username-Password-Authentication` value comes from the default the default Database Connections that Auth0 adds to all new tenants.
+Then you are ready to create `cypress_env.json` and paste there your own credentials.
+```metadata json
+//cypress_env.json
+{
+  "auth_url": "https://your-domain/oauth/token",
+  "auth_client_id": "YOUR_CLIENT_ID",
+  "auth_client_secret": "YOUR_CLIENT_SECRET",
+  "auth_username": "YOUR_USERNAME",
+  "auth_password": "YOUR_PASSWORD"
+}
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Development server
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Before starting the frontend server you need to get the backend microservices running. This will be needed for fetching and adding data related to our country and city lists. Go and clone [temperature_ms](https://github.com/dirien/temperature-ms). Then open it locally and in the both directories `city-api` and `country-api` run the command `go run .`
 
-### `npm run eject`
+Now you are ready to start the project and benefit from its resources.
+Run `npm run start` for a dev server. Navigate to `http://localhost:3000/`. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Running end-to-end tests with Cypress
+Please be sure that the server is running when you will use one of the following commands.
+Run `npm run cy:chrome`, `npm run cy:open`or `npm run cy:run`,` to execute the end-to-end tests via Cypress
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Contributing
+If you have something to add or idea for improvements feel free to make pull requests. I'm always happy to hear your feedback!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## License
+[apache-2.0](https://choosealicense.com/licenses/apache-2.0/)

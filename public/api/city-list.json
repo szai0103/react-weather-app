@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "name": "Berlin",
+    "temperature": 10
+  },
+  {
+    "id": 2,
+    "name": "Munich",
+    "temperature": 5
+  },
+  {
+    "id": 3,
+    "name": "Menheim",
+    "temperature": 8
+  },
+  {
+    "id": 4,
+    "name": "Neckarsulm",
+    "temperature": 10
+  },{
+  "id": 5,
+  "name": "Paris",
+  "temperature": 10
+},
+  {
+    "id": 6,
+    "name": "Marseille",
+    "temperature": 6
+  },
+  {
+    "id": 7,
+    "name": "Lion",
+    "temperature": 12
+  },
+  {
+    "id": 8,
+    "name": "Nice",
+    "temperature": 10
+  },
+  {
+    "id": 9,
+    "name": "Barcelona",
+    "temperature": 20
+  },
+  {
+    "id": 10,
+    "name": "Madrid",
+    "temperature": 15
+  },
+  {
+    "id": 11,
+    "name": "Valencia",
+    "temperature": 17
+  },
+  {
+    "id": 12,
+    "name": "Seville",
+    "temperature": 12
+  }
+]

@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Header from "./components/Header";
+import {Route} from "react-router-dom";
+import Home from "./components/Home";
+import CityList from "./components/CityList";
+import CountryList from "./components/CountryList";
+import ProfilePage from "./components/ProfilePage";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component<any, any> {
+
+  componentDidMount() {
+    window.console.info("App component mounted");
+  }
+
+  render() {
+    return (
+      <div>
+        <Header auth={this.props.auth} {...this.props} />
+        <Route exact={true} path="/home" render={props => <Home auth={this.props.auth} {...this.props} />} />
+        <Route
+          exact={true}
+          path="/country-list/:iso"
+          render={props => <CityList auth={this.props.auth} {...this.props} />}
+        />
+        <Route
+          exact={true}
+          path="/country-list"
+          render={props => <CountryList auth={this.props.auth} {...this.props} />}
+        />
+        <Route exact={true} path="/profile" render={props => <ProfilePage auth={this.props.children} {...this.props} />}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
